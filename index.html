@@ -29,7 +29,7 @@ btnEnvio.click(function enviarDatos(){
     /*alert("Listo");*/
     $.ajax({
         type:"POST",
-        url:"enviodatos.php",
+        url:"http://sistemas7.260mb.net/enviodatos.php",
         data:"matricula="+mat+"&nombre="+nom+"&apellidop="+app+"&apellidom="+apm+"&telefono="+tel+"&email="+corr+"&direccion="+dir+"&edad="+edad,
         success: recepcion});
 });
@@ -62,7 +62,7 @@ function recepcion(datos){
     //alert("Listo");
     $.ajax({
         type:"POST",
-        url:"enviopromedio.php",
+        url:"http://sistemas7.260mb.net/enviopromedio.php",
         data:"matricula="+mat1+"&p1="+n1+"&p2="+n2+"&p3="+n3+"&p4="+n4+"&promedio="+result,
         success: recepcion2   });
 });
