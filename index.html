@@ -1,0 +1,176 @@
+<!DOCTYPE html-->
+    <html>
+        <head>
+           
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+<script src="js/jquery.js"></script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<style type="text/css">
+    p{
+        text-align: center;
+    }
+    
+</style>
+<script type="text/javascript">
+    $(document).ready(function inicio(){
+/*alert("Listo");*/
+var btnEnvio=$("#enviar");
+btnEnvio.click(function enviarDatos(){
+    var mat=$("#matricula").val();
+    var nom=$("#nombre").val();
+    var app=$("#apellidop").val();
+    var apm=$("#apellidom").val();
+    var tel=$("#telefono").val();
+    var corr=$("#email").val();
+    var dir=$("#direccion").val();
+    var edad=$("#edad").val();
+    
+    
+    /*alert("Listo");*/
+    $.ajax({
+        type:"POST",
+        url:"enviodatos.php",
+        data:"matricula="+mat+"&nombre="+nom+"&apellidop="+app+"&apellidom="+apm+"&telefono="+tel+"&email="+corr+"&direccion="+dir+"&edad="+edad,
+        success: recepcion});
+});
+function recepcion(datos){
+    /*alert("Listo:"+datos);*/
+    var resp=$("#respuesta");
+    resp.html(datos);
+
+}  
+/*-----------------------------------------------------------*/
+
+   var btnEnvio2=$("#env");
+  btnEnvio2.click(function enviarPromedio(){
+     var mat1=$("#matricula1").val();
+    //alert("sii");
+     var n1=parseInt($("#p1").val());
+     //alert(n1);
+     var n2=parseInt($("#p2").val());
+     //alert(n2);
+     var n3=parseInt($("#p3").val());
+     //alert(n3);
+     var n4=parseInt($("#p4").val());
+     //alert(n4);
+     var result=(n1+n2+n3+n4)/4;
+     //alert(result);
+     var r=$("#promedio");
+     r.val(result);
+    
+    
+    //alert("Listo");
+    $.ajax({
+        type:"POST",
+        url:"enviopromedio.php",
+        data:"matricula="+mat1+"&p1="+n1+"&p2="+n2+"&p3="+n3+"&p4="+n4+"&promedio="+result,
+        success: recepcion2   });
+});
+function recepcion2(dat){
+    alert("Listo:"+datos);
+    var resp1=$("#resultado");
+    resp1.html(dat);
+}});
+ 
+    
+</script>
+</head>
+        <body>
+           <div data-role="page" id="Principal" data-theme="b">
+            <div data-role="header">
+            <p>Mi primera aplicación</p>
+            </div>
+            <div data-role="content">
+            <p>Contenido de la aplicación</p>
+            <a href="#Pagina2" data-role="button" data-transition="slide">Registrar Alumno</a>
+            <a href="#Pagina3" data-role="button" data-transition="slideup">Registrar calificaciones</a>
+            
+            </div>
+            <div data-role="footer">
+            <p> Pie de página</p>
+            </div>
+            </div> <!-- AQUI TERMINA UNA PAGINA-->
+            <!---------------------------------------------------------------------->
+           
+           <div data-role="page" id="Pagina2">
+        
+            <div data-role="header">
+            <a href="#Principal" data-role="button" data-transition="flip" data-add-back-btn="true" data-icon="home" >Regresar</a>
+                <p>Registro de alumno</p>   
+            </div>
+          
+        <div data-role="content">
+        <form method="POST" action="enviodatos.php">
+        <div class="ui-field-contain">
+        <label for="nombre">Matricula:</label>
+        <input type="text" name="matricula" id="matricula">   
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre">
+        <label for="apellidop">Apellido Paterno: </label>
+        <input type="text" name="apellidop" id="apellidop" /><br>
+        <label for="apellidom">Apellido Materno: </label>
+        <input type="text" name="apellidom" id="apellidom" /><br>
+        <label for="telefono">Telefono: </label>
+        <input type="text" name="telefono" id="telefono" /><br>
+        <label for="email">Correo:</label>
+        <input type="text" name="email" id="email" placeholder="cuenta@servicio.extencion">
+        <label for="direccion">Dirección: </label>
+        <input type="text" name="direccion" id="direccion" /><br>
+        <label for="observaciones">Edad: </label>
+        <input type="text" name="edad" id="edad" /><br>
+        </div>		
+        <input type="button" name="enviar" id="enviar" value="enviar">
+        </form>
+        <div id="respuesta">
+        </div>
+        </div>
+                
+                <div data-role="footer">
+                    <!--p>Datos del contacto</p-->
+                    
+                </div>
+           </div>
+<!-----------------------------------------PAGINA PARA EL PROMEDIO------------------------------------------------------------->
+            
+            <div data-role="page" id="Pagina3">
+        
+            <div data-role="header">
+            <a href="#Principal" data-role="button" data-transition="flip" data-add-back-btn="true" data-icon="home" >Regresar</a>
+                <p>Registro de calificaciones</p>   
+            </div>
+          
+        <div data-role="content">
+        <form method="POST" action="enviopromedio.php">
+        <div class="ui-field-contain">
+        <label for="nombre">Matricula:</label>
+        <input type="text" name="matricula1" id="matricula1">
+        <label for="apellidop">Parcial 1: </label>
+        <input type="text" name="p1" id="p1" /><br>
+        <label for="apellidom">Parcial 2: </label>
+        <input type="text" name="p2" id="p2" /><br>
+        <label for="telefono">Parcial 3: </label>
+        <input type="text" name="p3" id="p3" /><br>
+        <label for="email">Parcial 4:</label>
+        <input type="text" name="p4" id="p4">
+        <label for="direccion">Promedio: </label>
+        <input type="text" name="promedio" id="promedio" disabled="true"/><br>
+        </div>		
+        <input type="button" name="env" id="env" value="Enviar">
+        </form>
+        <div id="resultado">
+        </div>
+                    
+                </div>
+                
+                <div data-role="footer">
+                    <!--p>Datos del contacto</p-->
+                    
+                </div>
+           </div>
+          
+           
+           
+           
+            
+        </body>
+</html>
